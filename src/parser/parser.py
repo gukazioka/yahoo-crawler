@@ -4,8 +4,7 @@ from src.model.equity import Equity
 class WebParser:
     @staticmethod
     def parse(source : str) -> list[Equity]:
-        # TODO: Mudar o html.parser para um parser mais eficiente.
-        parser = BeautifulSoup(source, "html.parser")
+        parser = BeautifulSoup(source, "lxml")
         body = parser.find('tbody')
         rows = body.find_all('tr')
         equities = []

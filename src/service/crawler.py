@@ -2,6 +2,7 @@ from src.fetcher.fetcher import WebFetcher
 from src.parser.parser import WebParser
 from src.model.equity import Equity
 from src.storage.writer import Writer
+from src.errors.error import InvalidRegion
 
 class Crawler:
     def __init__(
@@ -13,12 +14,14 @@ class Crawler:
         self.writer = writer
     
     def get_equities(self, region: str) -> list[Equity]:
-        all_equities = []
-        self.fetcher.set_region(region)
-        table_generator = self.fetcher.get_table()
-        for table in table_generator:
-            equities = WebParser.parse(table)
-            if equities[0] in all_equities:
-                print(f'{equities[0]} repitiu' )
-            all_equities.extend(equities)
-        self.writer.save_equities(all_equities)
+        try:
+            all_equities = []
+            self.fetcher.set_region(region)
+            table_generator = self.fetcher.get_table()
+            for table in table_generator:
+                equities = WebParser.parse(table)
+                all_equities.extend(equities)
+            self.writer.save_equities(all_equities)
+        except InvalidRegion as e:
+            print(e)
+

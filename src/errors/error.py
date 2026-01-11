@@ -1,0 +1,2 @@
+class InvalidRegion(Exception):
+    pass

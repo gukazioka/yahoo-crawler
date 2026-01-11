@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
+from src.errors.error import InvalidRegion
 
 class WebFetcher:
 
@@ -30,6 +30,10 @@ class WebFetcher:
         eua_input = self.driver.find_element(By.CSS_SELECTOR, f'label[title="United States"] input')
         if eua_input.is_selected():
             eua_input.click()
+
+        if not self.driver.find_elements(By.CSS_SELECTOR, f'label[title="{region}"] input'):
+            raise InvalidRegion('Invalid region.')
+
         self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f'label[title="{region}"] input'))).click()
         updated = self.driver.find_element(By.CSS_SELECTOR, '[data-testid="table-cell-ticker"]').get_attribute('innerHTML')
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-testid="filter-apply"]'))).click()

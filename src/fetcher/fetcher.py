@@ -19,13 +19,13 @@ class WebFetcher:
         prefs = {"profile.managed_default_content_settings.images": 2}
         options.add_experimental_option("prefs", prefs)
         self.driver = webdriver.Chrome(options=options)
-        self.wait = WebDriverWait(self.driver, timeout=10)
+        self.wait = WebDriverWait(self.driver, timeout=5, poll_frequency=0.1)
         self.driver.get(url)
 
     # ElementClickInterceptedException
     def set_region(self, region : str):
-        self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-testid="add-filters-button"]'))).click()
-        self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-testid="filter-category-market_data"]'))).click()
+        self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="add-filters-button"]'))).click()
+        self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="filter-category-market_data"]'))).click()
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="filter-metric-region"]'))).click()
         # TODO: Verificar se mais algum está selecionado.
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, f'label[title="United States"] input')))

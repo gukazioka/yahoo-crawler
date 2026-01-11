@@ -1,6 +1,6 @@
-from src.parser.parser import WebParser
-from src.fetcher.fetcher import WebFetcher
+from src.service.crawler import Crawler
 import sys
 
 if __name__ == '__main__':
-    fetcher = WebFetcher(sys.arg[1])
+    crawler = Crawler(sys.argv[1])
+    crawler.get_equities('China')

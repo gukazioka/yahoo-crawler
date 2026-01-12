@@ -21,9 +21,11 @@ class Crawler:
             for table in table_generator:
                 equities = WebParser.parse(source=table)
                 self.writer.save_equities(equities)
+            print('Equities fetched successfully.')
         except InvalidRegion as e:
             print(e)
             sys.exit(1)
         except Exception as e:
-            print(e)
+            print('Error while fetching equities')
+            sys.exit(1)
 

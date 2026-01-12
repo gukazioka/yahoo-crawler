@@ -4,6 +4,7 @@ from src.parser.parser import WebParser
 from src.model.equity import Equity
 from src.storage.writer import Writer
 from src.errors.error import InvalidRegion
+from src.logger.log import logger
 
 class Crawler:
     def __init__(
@@ -35,11 +36,11 @@ class Crawler:
             for table in table_generator:
                 equities = WebParser.parse(source=table)
                 self.writer.save_equities(equities)
-            print('Equities fetched successfully.')
+            logger.info('Equities fetched successfully.')
         except InvalidRegion as e:
-            print(e)
+            logger.error(e)
             sys.exit(1)
         except Exception as e:
-            print('Error while fetching equities')
+            logger.error('Error while fetching equities')
             sys.exit(1)
 

@@ -52,3 +52,5 @@ class WebFetcher:
             self.wait.until(lambda e : e.find_element(By.CSS_SELECTOR, '[data-testid="table-cell-ticker"]').get_attribute('innerHTML') != updated)
             table = self.driver.find_element(By.CSS_SELECTOR, '[data-testid="screener-table"]')
             yield table.get_attribute('innerHTML')
+
+        self.driver.quit()

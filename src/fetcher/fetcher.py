@@ -18,6 +18,7 @@ class WebFetcher:
         options.add_argument("--no-sandbox")
         prefs = {"profile.managed_default_content_settings.images": 2}
         options.add_experimental_option("prefs", prefs)
+
         self.driver = webdriver.Chrome(options=options)
         self.wait = WebDriverWait(self.driver, timeout=5, poll_frequency=0.1)
         self.driver.get(url)
@@ -27,6 +28,7 @@ class WebFetcher:
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="filter-category-market_data"]'))).click()
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-testid="filter-metric-region"]'))).click()
         self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, f'label[title="United States"] input')))
+
         eua_input = self.driver.find_element(By.CSS_SELECTOR, f'label[title="United States"] input')
         if eua_input.is_selected():
             eua_input.click()

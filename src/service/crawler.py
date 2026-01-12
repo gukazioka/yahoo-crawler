@@ -15,13 +15,15 @@ class Crawler:
     
     def get_equities(self, region: str) -> list[Equity]:
         try:
-            all_equities = []
             self.fetcher.set_region(region)
             table_generator = self.fetcher.get_table()
+            all_equities = []
             for table in table_generator:
-                equities = WebParser.parse(table)
+                equities = WebParser.parse(source=table)
                 all_equities.extend(equities)
             self.writer.save_equities(all_equities)
         except InvalidRegion as e:
+            print(e)
+        except Exception as e:
             print(e)
 

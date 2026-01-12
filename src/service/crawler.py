@@ -1,3 +1,4 @@
+import sys
 from src.fetcher.fetcher import WebFetcher
 from src.parser.parser import WebParser
 from src.model.equity import Equity
@@ -22,6 +23,7 @@ class Crawler:
                 self.writer.save_equities(equities)
         except InvalidRegion as e:
             print(e)
+            sys.exit(1)
         except Exception as e:
             print(e)
 

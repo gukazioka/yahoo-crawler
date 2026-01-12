@@ -12,16 +12,14 @@ class Crawler:
             ):
         self.fetcher = WebFetcher(url)
         self.writer = writer
-    
+
     def get_equities(self, region: str) -> list[Equity]:
         try:
             self.fetcher.set_region(region)
             table_generator = self.fetcher.get_table()
-            all_equities = []
             for table in table_generator:
                 equities = WebParser.parse(source=table)
-                all_equities.extend(equities)
-            self.writer.save_equities(all_equities)
+                self.writer.save_equities(equities)
         except InvalidRegion as e:
             print(e)
         except Exception as e:

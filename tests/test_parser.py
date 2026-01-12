@@ -32,3 +32,19 @@ class TestParser:
         assert equity.symbol == 'ABC Corp'
         assert equity.name == 'ABC Corporation'
         assert equity.price == '123.45'
+
+    def test_parse_invalid_row(self, get_parser):
+        invalid_html = '''
+            <tr>
+                <td data-testid="table-cell-ticker">
+                    <span>XYZ</span>
+                </td>
+                <td data-testid-cell="companyshortname.raw">
+                    <div>XYZ Inc</div>
+                </td>
+            </tr>
+        '''
+        parser = BeautifulSoup(invalid_html, "lxml")
+        row = parser.find('tr')
+        with pytest.raises(AttributeError):
+            get_parser.parse_row(row)

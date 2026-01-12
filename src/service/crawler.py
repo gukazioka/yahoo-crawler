@@ -11,10 +11,24 @@ class Crawler:
             url: str,
             writer: Writer
             ):
+        """
+        Initialize the Crawler.
+
+        :param url: URL to fetch equities.
+        :type url: str
+        :param writer: Storage provider
+        :type writer: Writer
+        """
         self.fetcher = WebFetcher(url)
         self.writer = writer
 
-    def get_equities(self, region: str) -> list[Equity]:
+    def get_equities(self, region: str):
+        """
+        Get equities and saves them using the provided writer.
+
+        :param region: Filter region for equities.
+        :type region: str
+        """
         try:
             self.fetcher.set_region(region)
             table_generator = self.fetcher.get_table()

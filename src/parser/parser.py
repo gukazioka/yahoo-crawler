@@ -4,6 +4,14 @@ from src.model.equity import Equity
 class WebParser:
     @classmethod
     def parse(cls, source : str) -> list[Equity]:
+        """
+        Parse table HTML and return a list of Equity objects.
+
+        :param source: HTML content of the table.
+        :type source: str
+        :return: List of equities.
+        :rtype: list[Equity]
+        """
         parser = BeautifulSoup(source, "lxml")
         body = parser.find('tbody')
         rows = body.find_all('tr')
@@ -12,6 +20,14 @@ class WebParser:
 
     @classmethod
     def parse_row(cls, row : Tag) -> Equity:
+        """
+        Parse the table row and returns an Equity object.
+
+        :param row: Table row
+        :type row: Tag
+        :return: Equity object
+        :rtype: Equity
+        """
         ticker_cell = row.select_one('[data-testid="table-cell-ticker"]')
         ticker = ticker_cell.find_all('span')[-1].get_text(strip=True)
         name_cell = row.select_one('[data-testid-cell="companyshortname.raw"]')

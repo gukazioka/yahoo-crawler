@@ -26,6 +26,12 @@ class WebFetcher:
         self.driver.get(url)
 
     def set_region(self, region : str):
+        """
+        Set the region filter on the webpage.
+
+        :param region: Region to filter equities.
+        :type region: str
+        """
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="add-filters-button"]'))).click()
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="filter-category-market_data"]'))).click()
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="filter-metric-region"]'))).click()
@@ -44,6 +50,9 @@ class WebFetcher:
         self.wait.until(lambda e : e.find_element(By.CSS_SELECTOR, '[data-testid="table-cell-ticker"]').get_attribute('innerHTML') != updated)
 
     def get_table(self):
+        """
+        Generator that yields the HTML content of the equity table for each page
+        """
         table = self.driver.find_element(By.CSS_SELECTOR, '[data-testid="screener-table"]')
         yield table.get_attribute('innerHTML')
 

@@ -48,3 +48,13 @@ Exemplo:
 ```
 $ python main.py China
 ```
+
+Após isso será criado um arquivo equities.py contendo os dados coletados.
+
+## Executar testes
+
+Para executar os testes é necessário executar o seguinte comando:
+
+```
+$ python -m pytest
+```

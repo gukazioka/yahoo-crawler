@@ -10,7 +10,8 @@ class Crawler:
     def __init__(
             self,
             url: str,
-            writer: Writer
+            writer: Writer,
+            parser: WebParser
             ):
         """
         Initialize the Crawler.
@@ -22,6 +23,7 @@ class Crawler:
         """
         self.fetcher = WebFetcher(url)
         self.writer = writer
+        self.parser = parser
 
     def get_equities(self, region: str):
         """
@@ -34,7 +36,7 @@ class Crawler:
             self.fetcher.set_region(region)
             table_generator = self.fetcher.get_table()
             for table in table_generator:
-                equities = WebParser.parse(source=table)
+                equities = self.parser.parse(source=table)
                 self.writer.save_equities(equities)
             logger.info('Equities fetched successfully.')
         except InvalidRegion as e:

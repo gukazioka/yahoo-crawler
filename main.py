@@ -1,6 +1,7 @@
 from src.service.crawler import Crawler
 from src.storage.csv import CSVWriter
 from src.logger.log import logger
+from src.parser.parser import WebParser
 import sys
 import os
 
@@ -14,5 +15,5 @@ if __name__ == '__main__':
         sys.exit(1)
 
     region = sys.argv[1]
-    crawler = Crawler('https://finance.yahoo.com/research-hub/screener/equity/', CSVWriter)
+    crawler = Crawler('https://finance.yahoo.com/research-hub/screener/equity/', CSVWriter, WebParser)
     crawler.get_equities(region)
